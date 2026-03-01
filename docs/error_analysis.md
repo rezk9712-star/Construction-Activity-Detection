@@ -1,12 +1,12 @@
 Root Cause Legend:
 
-Occlusion: Object is partially hidden by other equipment or structures.
+Occlusion:Construction elements or machinery are partially hidden by other site objects or structural components.
 
 Scale Variance: The object is too small or too far from the camera.
 
-Illumination: Harsh shadows or low light washed out the object's features.
+Illumination: Lighting conditions such as shadows, fog, or low light reduce visual clarity.
 
-Class Confusion: Object looks visually similar to another class (e.g., a yellow bucket vs. a yellow helmet).
+Class Confusion: Objects with similar textures, colors, or shapes are visually difficult to distinguish (e.g., excavated soil vs. machinery components).
 False Positive (FP) Analysis
 ID: FP1
 
