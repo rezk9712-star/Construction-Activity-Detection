@@ -13,6 +13,7 @@ To reproduce these results, follow these steps in Google Colab:
 * **Parameters:** 50 Epochs | 167 Image Size | Batch 16
 * **Environment:** `ultralytics` library installed via pip.
 * **Hardware:** Tesla T4 GPU (Google Colab).
+* **Expected Run time:** 30-35 min
 
 Metric,Value 
 Precision,"[0.7934]"
