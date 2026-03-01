@@ -45,16 +45,21 @@ Machinery Diversity: We recognize that the model may perform better on common ye
 ⚠️ Activity Detection Error Governance
 
 1. False Positive (FP) Risks & Mitigations
-Risk (Nuisance/Alert Fatigue): Mistaking site terrain or orange safety materials for active machinery creates "nuisance alerts" in project management logs.
+Misinterpreting site terrain or construction materials as active machinery may create inaccurate activity records.
 
-Mitigation: We have documented the tendency for the model to experience "Class Confusion" with earth mounds and orange pipes. Users are advised to verify automated activity logs against timestamped site photos before making scheduling decisions.
+Mitigation:
+The model may experience class confusion, particularly between earth mounds, excavation areas, and construction equipment.
+Users are advised to verify automated detections against site photos before making operational decisions.
 
 2. False Negative (FN) Risks & Mitigations
-Risk (Data Under-Reporting): Failing to detect active workers or equipment—particularly those at a distance or obscured by rebar—leads to under-reporting of site productivity and potential safety gaps.
+Risk (Data Under-Reporting): Failur to detect construction activities,espicially small or partially visible equipment or materials may result in incomplete activity records.
 
-Mitigation: To address "Scale Variance" and "Occlusion," our data improvement plan prioritizes Mosaic Augmentation to help the model identify partially hidden subjects. In its current state, the model should be treated as a "partial count" tool rather than an absolute census of site activity.
+To address scale variation and occlusion, the dataset improvement plan includes Mosaic Augmentation and additional diverse training images.
+
+In its current state, the model should be treated as a support tool for activity monitoring rather than a fully automated reporting system.
 
 3. Ethical Use of Detection Data
-Data Bias: Detection results should not be used for punitive measures against workers (e.g., measuring "idle time") since "Occlusion" errors may incorrectly suggest a worker is missing from their station when they are simply behind a structural element.
+Data Bias: Detection results should be used as decision-support information, not as fully automated construction reporting.
+Automated activity detections should be verified against site images before operational decisions are made
 
 Accuracy Transparency: All project stakeholders must be informed of the model's baseline mAP score to understand the inherent margin of error in automated construction reporting.
