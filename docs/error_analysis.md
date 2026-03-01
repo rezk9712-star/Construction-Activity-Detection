@@ -13,11 +13,18 @@
 ---
 
 ID,Type,Observation (What),Root Cause Hypothesis (Why)
+
 FP1,False Positive,Dirt Mound as Excavator: Model predicted an excavator with 0.75 confidence over a mound of earth.,"Texture Confusion: The jagged, brownish edges of the loose soil mimic the complex metallic silhouette of an excavator bucket or tread."
+
 FP2,False Positive,Snow/Sky as Excavator: Model predicted an excavator in a blank area of snow and sky.,"Contrast Glitch: High-exposure white areas (snow/clouds) can create ""phantom"" edges that the model mistakenly associates with a machine's frame."
+
 FP3,False Positive,"Snow/Dirt as Concrete: Model predicted a ""Concrete"" box on an area of dirty snow.","Color Invariance: The grayish-white mixture of snow and mud shares a similar color profile to wet concrete, causing class confusion."
+
 FN1,False Negative,Ground-truth Excavation Missed: The model failed to detect a clearly visible excavation pit.,"Depth Variance: The model struggles to recognize the ""negative space"" of a pit when the lighting is flat or the color matches the surrounding terrain."
+
+
 FN2,False Negative,Ground-truth Excavator Missed: A large excavator was completely ignored by the model.,Scale Variance: The object was likely too large for the YOLOv8n (nano) anchor boxes to process when positioned too close to the camera.
+
 FN3,False Negative,Snow-Covered Excavation Missed: The model missed a pit because it was covered in snow.,"Occlusion/Atmosphere: The layer of snow changed the visual ""signature"" of the excavation class, which was likely trained on dry dirt examples."
 ---
 
