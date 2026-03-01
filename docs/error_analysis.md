@@ -12,42 +12,13 @@
 
 ---
 
-## False Positive (FP) Analysis
-
-### FP-1 — `fp_01_excavator.png`
-- **Predicted Class:** Excavator (conf: 0.75)
-- **Actual Object:** Excavator correctly present, but predicted box does not sufficiently overlap GT annotation
-- **Root Cause: Box Mismatch.** The model predicts a large box covering the full machine body including tracks, while the GT annotation covers only the upper arm/boom region. IoU falls below the match threshold so the prediction is counted as a false positive despite the excavator being genuinely present.
-
-### FP-2 — `fp_02_excavator.png`
-- **Predicted Class:** Excavator (conf: 0.63)
-- **Actual Object:** Excavator bucket/upper structure — partially cut off at frame edge under snowy conditions
-- **Root Cause: Illumination + Box Mismatch.** Heavy snowfall and grey overcast lighting desaturate the excavator's yellow paint. The model detects only the upper cab/bucket portion visible in the top-right corner as a separate instance, while the GT annotation covers the full machine — producing a low-IoU mismatch counted as FP.
-
-### FP-3 — `fp_03_concrete.png`
-- **Predicted Class:** Concrete (conf: 0.46)
-- **Actual Object:** Snow-covered frozen ground / icy surface in the bottom-left corner of a winter excavation scene
-- **Root Cause: Class Confusion + Illumination.** The pinkish-grey tone of snow-covered wet ground closely matches the colour distribution of concrete in the training set. The flat, smooth surface texture further reinforces the Concrete class signal, triggering a spurious low-confidence detection with no GT match.
-
----
-
-## False Negative (FN) Analysis
-
-### FN-1 — `fn_01_excavation.png`
-- **Missed Class:** Excavation
-- **Condition:** Dramatic warm sunset backlight; excavation pit occupies the lower foreground
-- **Root Cause: Illumination.** Intense orange-yellow backlighting washes out depth cues and shadow contrast in the lower frame. The model correctly detects the excavator above but fails to fire on the earthworks pit beneath it, as the warm light fills the normally-dark pit region.
-
-### FN-2 — `fn_02_excavator.png`
-- **Missed Class:** Excavator (upper boom/arm sub-region)
-- **Condition:** Same sunset scene; GT box covers only the arm — a tight sub-region of the full machine
-- **Root Cause: Scale Variance + Box Mismatch.** The GT label annotates only the boom of the excavator as a separate tight box. The model's prediction covers the full machine body, so the tight sub-region GT annotation is unmatched (IoU too low), registering as a false negative even though the machine is clearly detected.
-
-### FN-3 — `fn_03_excavation.png`
-- **Missed Class:** Excavation
-- **Condition:** Snowy winter construction site; deep trench clearly visible in the centre of frame
-- **Root Cause: Illumination + Class Confusion.** Snow coverage whites out the normally-dark soil edges that define an excavation pit. The model predicts Excavation for a smaller left-side region and detects the excavator and concrete, but the main large GT excavation box in the centre goes unmatched — snow-blanketed trench walls lose the textural contrast the model expects.
-
+ID,Type,Observation (What),Root Cause Hypothesis (Why)
+FP1,False Positive,Dirt Mound as Excavator: Model predicted an excavator with 0.75 confidence over a mound of earth.,"Texture Confusion: The jagged, brownish edges of the loose soil mimic the complex metallic silhouette of an excavator bucket or tread."
+FP2,False Positive,Snow/Sky as Excavator: Model predicted an excavator in a blank area of snow and sky.,"Contrast Glitch: High-exposure white areas (snow/clouds) can create ""phantom"" edges that the model mistakenly associates with a machine's frame."
+FP3,False Positive,"Snow/Dirt as Concrete: Model predicted a ""Concrete"" box on an area of dirty snow.","Color Invariance: The grayish-white mixture of snow and mud shares a similar color profile to wet concrete, causing class confusion."
+FN1,False Negative,Ground-truth Excavation Missed: The model failed to detect a clearly visible excavation pit.,"Depth Variance: The model struggles to recognize the ""negative space"" of a pit when the lighting is flat or the color matches the surrounding terrain."
+FN2,False Negative,Ground-truth Excavator Missed: A large excavator was completely ignored by the model.,Scale Variance: The object was likely too large for the YOLOv8n (nano) anchor boxes to process when positioned too close to the camera.
+FN3,False Negative,Snow-Covered Excavation Missed: The model missed a pit because it was covered in snow.,"Occlusion/Atmosphere: The layer of snow changed the visual ""signature"" of the excavation class, which was likely trained on dry dirt examples."
 ---
 
 ## Prioritised Next Data Improvements
